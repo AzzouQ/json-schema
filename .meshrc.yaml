@@ -1,0 +1,11 @@
+sources:
+  - name: API
+    handler:
+      jsonSchema:
+        baseUrl: https:a.fake.api.com
+        operations:
+          - type: Query
+            field: myObject
+            path: /any
+            method: GET
+            responseSchema: ./schema.json#/definitions/MyObject

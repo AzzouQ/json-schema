@@ -1,0 +1,26 @@
+schema {
+  query: Query
+}
+
+directive @oneOf on INPUT_OBJECT | FIELD_DEFINITION
+
+type Query {
+  myObject: MyObject
+}
+
+type MyObject {
+  shouldBeStringOrNull: query_myObject_shouldBeStringOrNull!
+}
+
+union query_myObject_shouldBeStringOrNull = Void_container | String_container
+
+type Void_container {
+  Void: Void
+}
+
+"Represents empty values"
+scalar Void
+
+type String_container {
+  String: String
+}

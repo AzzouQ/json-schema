@@ -1,0 +1,21 @@
+{
+  "definitions": {
+    "MyObject": {
+      "type": "object",
+      "title": "MyObject",
+      "properties": {
+        "shouldBeStringOrNull": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "required": ["shouldBeStringOrNull"]
+    }
+  }
+}
