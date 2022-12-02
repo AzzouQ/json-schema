@@ -4,10 +4,10 @@
       "type": "object",
       "title": "MyObject",
       "properties": {
-        "shouldBeStringOrNull": {
+        "shouldBeStringOrNumber": {
           "oneOf": [
             {
-              "type": "null"
+              "type": "number"
             },
             {
               "type": "string"
@@ -15,7 +15,7 @@
           ]
         }
       },
-      "required": ["shouldBeStringOrNull"]
+      "required": ["shouldBeStringOrNumber"]
     }
   }
 }

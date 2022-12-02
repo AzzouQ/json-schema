@@ -16,9 +16,8 @@ export type Scalars = {
   String: string;
   Boolean: boolean;
   Int: number;
+  /** The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). */
   Float: number;
-  /** Represents empty values */
-  Void: void;
 };
 
 export type Query = {
@@ -26,13 +25,13 @@ export type Query = {
 };
 
 export type MyObject = {
-  shouldBeStringOrNull: query_myObject_shouldBeStringOrNull;
+  shouldBeStringOrNumber: query_myObject_shouldBeStringOrNumber;
 };
 
-export type query_myObject_shouldBeStringOrNull = Void_container | String_container;
+export type query_myObject_shouldBeStringOrNumber = Float_container | String_container;
 
-export type Void_container = {
-  Void?: Maybe<Scalars['Void']>;
+export type Float_container = {
+  Float?: Maybe<Scalars['Float']>;
 };
 
 export type String_container = {

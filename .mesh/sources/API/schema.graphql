@@ -9,17 +9,14 @@ type Query {
 }
 
 type MyObject {
-  shouldBeStringOrNull: query_myObject_shouldBeStringOrNull!
+  shouldBeStringOrNumber: query_myObject_shouldBeStringOrNumber!
 }
 
-union query_myObject_shouldBeStringOrNull = Void_container | String_container
+union query_myObject_shouldBeStringOrNumber = Float_container | String_container
 
-type Void_container {
-  Void: Void
+type Float_container {
+  Float: Float
 }
-
-"Represents empty values"
-scalar Void
 
 type String_container {
   String: String

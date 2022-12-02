@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { GraphQLResolveInfo, SelectionSetNode, FieldNode, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { GraphQLResolveInfo, SelectionSetNode, FieldNode } from 'graphql';
 import { findAndParseConfig } from '@graphql-mesh/cli';
 import { createMeshHTTPHandler, MeshHTTPHandler } from '@graphql-mesh/http';
 import { getMesh, ExecuteMeshFn, SubscribeMeshFn, MeshContext as BaseMeshContext, MeshInstance } from '@graphql-mesh/runtime';
@@ -23,9 +23,8 @@ export type Scalars = {
   String: string;
   Boolean: boolean;
   Int: number;
+  /** The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). */
   Float: number;
-  /** Represents empty values */
-  Void: void;
 };
 
 export type Query = {
@@ -33,13 +32,13 @@ export type Query = {
 };
 
 export type MyObject = {
-  shouldBeStringOrNull: query_myObject_shouldBeStringOrNull;
+  shouldBeStringOrNumber: query_myObject_shouldBeStringOrNumber;
 };
 
-export type query_myObject_shouldBeStringOrNull = Void_container | String_container;
+export type query_myObject_shouldBeStringOrNumber = Float_container | String_container;
 
-export type Void_container = {
-  Void?: Maybe<Scalars['Void']>;
+export type Float_container = {
+  Float?: Maybe<Scalars['Float']>;
 };
 
 export type String_container = {
@@ -131,10 +130,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>;
-  MyObject: ResolverTypeWrapper<Omit<MyObject, 'shouldBeStringOrNull'> & { shouldBeStringOrNull: ResolversTypes['query_myObject_shouldBeStringOrNull'] }>;
-  query_myObject_shouldBeStringOrNull: ResolversTypes['Void_container'] | ResolversTypes['String_container'];
-  Void_container: ResolverTypeWrapper<Void_container>;
-  Void: ResolverTypeWrapper<Scalars['Void']>;
+  MyObject: ResolverTypeWrapper<Omit<MyObject, 'shouldBeStringOrNumber'> & { shouldBeStringOrNumber: ResolversTypes['query_myObject_shouldBeStringOrNumber'] }>;
+  query_myObject_shouldBeStringOrNumber: ResolversTypes['Float_container'] | ResolversTypes['String_container'];
+  Float_container: ResolverTypeWrapper<Float_container>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
   String_container: ResolverTypeWrapper<String_container>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
@@ -143,10 +142,10 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: {};
-  MyObject: Omit<MyObject, 'shouldBeStringOrNull'> & { shouldBeStringOrNull: ResolversParentTypes['query_myObject_shouldBeStringOrNull'] };
-  query_myObject_shouldBeStringOrNull: ResolversParentTypes['Void_container'] | ResolversParentTypes['String_container'];
-  Void_container: Void_container;
-  Void: Scalars['Void'];
+  MyObject: Omit<MyObject, 'shouldBeStringOrNumber'> & { shouldBeStringOrNumber: ResolversParentTypes['query_myObject_shouldBeStringOrNumber'] };
+  query_myObject_shouldBeStringOrNumber: ResolversParentTypes['Float_container'] | ResolversParentTypes['String_container'];
+  Float_container: Float_container;
+  Float: Scalars['Float'];
   String_container: String_container;
   String: Scalars['String'];
   Boolean: Scalars['Boolean'];
@@ -161,22 +160,18 @@ export type QueryResolvers<ContextType = MeshContext, ParentType extends Resolve
 }>;
 
 export type MyObjectResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['MyObject'] = ResolversParentTypes['MyObject']> = ResolversObject<{
-  shouldBeStringOrNull?: Resolver<ResolversTypes['query_myObject_shouldBeStringOrNull'], ParentType, ContextType>;
+  shouldBeStringOrNumber?: Resolver<ResolversTypes['query_myObject_shouldBeStringOrNumber'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type query_myObject_shouldBeStringOrNullResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['query_myObject_shouldBeStringOrNull'] = ResolversParentTypes['query_myObject_shouldBeStringOrNull']> = ResolversObject<{
-  __resolveType: TypeResolveFn<'Void_container' | 'String_container', ParentType, ContextType>;
+export type query_myObject_shouldBeStringOrNumberResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['query_myObject_shouldBeStringOrNumber'] = ResolversParentTypes['query_myObject_shouldBeStringOrNumber']> = ResolversObject<{
+  __resolveType: TypeResolveFn<'Float_container' | 'String_container', ParentType, ContextType>;
 }>;
 
-export type Void_containerResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Void_container'] = ResolversParentTypes['Void_container']> = ResolversObject<{
-  Void?: Resolver<Maybe<ResolversTypes['Void']>, ParentType, ContextType>;
+export type Float_containerResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['Float_container'] = ResolversParentTypes['Float_container']> = ResolversObject<{
+  Float?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
-
-export interface VoidScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Void'], any> {
-  name: 'Void';
-}
 
 export type String_containerResolvers<ContextType = MeshContext, ParentType extends ResolversParentTypes['String_container'] = ResolversParentTypes['String_container']> = ResolversObject<{
   String?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -186,9 +181,8 @@ export type String_containerResolvers<ContextType = MeshContext, ParentType exte
 export type Resolvers<ContextType = MeshContext> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   MyObject?: MyObjectResolvers<ContextType>;
-  query_myObject_shouldBeStringOrNull?: query_myObject_shouldBeStringOrNullResolvers<ContextType>;
-  Void_container?: Void_containerResolvers<ContextType>;
-  Void?: GraphQLScalarType;
+  query_myObject_shouldBeStringOrNumber?: query_myObject_shouldBeStringOrNumberResolvers<ContextType>;
+  Float_container?: Float_containerResolvers<ContextType>;
   String_container?: String_containerResolvers<ContextType>;
 }>;
 

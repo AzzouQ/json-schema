@@ -44,25 +44,25 @@ export default {
         "type": "object",
         "title": "MyObject",
         "properties": {
-          "shouldBeStringOrNull": {
-            "$ref": "#/definitions/query_myObject_shouldBeStringOrNull"
+          "shouldBeStringOrNumber": {
+            "$ref": "#/definitions/query_myObject_shouldBeStringOrNumber"
           }
         },
         "required": [
-          "shouldBeStringOrNull"
+          "shouldBeStringOrNumber"
         ],
         "$resolvedRef": "/definitions/MyObject"
       },
-      "query_myObject_shouldBeStringOrNull": {
+      "query_myObject_shouldBeStringOrNumber": {
         "oneOf": [
           {
-            "type": "null"
+            "type": "number"
           },
           {
             "type": "string"
           }
         ],
-        "title": "query_myObject_shouldBeStringOrNull"
+        "title": "query_myObject_shouldBeStringOrNumber"
       },
       "QueryInput": {
         "type": "object",
